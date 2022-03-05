@@ -47,7 +47,7 @@ namespace Celeste
             this.persistent = persistent;
             base.Collider = new Hitbox(16f, 20f, -8f, -8f);
             base.Add(new PlayerCollider(OnPlayer, null, null));
-            base.Add(sprite = BGswitch.spriteBank.Create("coreFlipSwitch"));
+            base.Add(sprite = Mod.BGswitch.BGswitch.spriteBank.Create("coreFlipSwitch"));
             base.Depth = 2000;
         }
 
@@ -116,7 +116,6 @@ namespace Celeste
                     Persist = BGMode;
                 }
                 Input.Rumble(RumbleStrength.Medium, RumbleLength.Medium);
-                level.Flash(Color.White * 0.5f, true);
                 Celeste.Freeze(0.05f);
                 cooldownTimer = 1f;
             }
@@ -155,7 +154,6 @@ namespace Celeste
         public static IEnumerator FlipFlash(Level level)
         {
             level.Shake(0.1f);
-            level.Flash(Color.White, false);
             level.FormationBackdrop.Display = true;
             level.FormationBackdrop.Alpha = 0.4f;
             yield return 0.3f;
@@ -164,6 +162,7 @@ namespace Celeste
 
         public static void Setup(Level level)
         {
+            level.Session.SetFlag("bg_mode", false);
             if (bgSolidTiles != null)
             {
                 level.Remove(bgSolidTiles);
@@ -201,6 +200,7 @@ namespace Celeste
                 level.Tracker.GetEntity<Player>().Sprite.Position += new Vector2(0, +2f);
                 level.SolidTiles.Collidable = false;
                 bgSolidTiles.Collidable = true;
+                level.Session.SetFlag("bg_mode", true);
             }
             if (OldBGMode == true && BGMode == false)
             {
@@ -208,6 +208,7 @@ namespace Celeste
                 level.Tracker.GetEntity<Player>().Sprite.Position += new Vector2(0, -2);
                 level.SolidTiles.Collidable = true;
                 bgSolidTiles.Collidable = false;
+                level.Session.SetFlag("bg_mode", false);
             }
             OldBGMode = BGMode;
         }

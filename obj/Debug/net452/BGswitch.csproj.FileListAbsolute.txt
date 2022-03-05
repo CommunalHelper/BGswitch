@@ -1,0 +1,9 @@
+/home/henry/repos/BGswitch/obj/Debug/net452/BGswitch.csproj.AssemblyReference.cache
+/home/henry/repos/BGswitch/obj/Debug/net452/BGswitch.GeneratedMSBuildEditorConfig.editorconfig
+/home/henry/repos/BGswitch/obj/Debug/net452/BGswitch.AssemblyInfoInputs.cache
+/home/henry/repos/BGswitch/obj/Debug/net452/BGswitch.AssemblyInfo.cs
+/home/henry/repos/BGswitch/obj/Debug/net452/BGswitch.csproj.CoreCompileInputs.cache
+/home/henry/repos/BGswitch/bin/Debug/net452/BGswitch.dll
+/home/henry/repos/BGswitch/bin/Debug/net452/BGswitch.pdb
+/home/henry/repos/BGswitch/obj/Debug/net452/BGswitch.dll
+/home/henry/repos/BGswitch/obj/Debug/net452/BGswitch.pdb

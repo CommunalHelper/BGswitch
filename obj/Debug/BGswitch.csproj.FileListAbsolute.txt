@@ -41,3 +41,5 @@
 /home/henryboles/.steam/steam/steamapps/common/Celeste/Mods/BGswitch.pdb
 /home/henryboles/.steam/steam/steamapps/common/Celeste/Mods/BGswitch/BGswitch.dll
 /home/henryboles/.steam/steam/steamapps/common/Celeste/Mods/BGswitch/BGswitch.pdb
+/home/henry/repos/BGswitch/obj/Debug/BGswitch.dll
+/home/henry/repos/BGswitch/obj/Debug/BGswitch.pdb

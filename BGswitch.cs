@@ -55,13 +55,15 @@ namespace Celeste.Mod.BGswitch
                 {
                     if (self.Tracker.GetEntity<Player>() != null)
                     {
-                        self.Tracker.GetEntity<Player>().Sprite.Position = new Vector2();
-                        if (!BGModeToggle.Persist)
-                        {
-                            self.Tracker.GetEntity<Player>().Sprite.Position += new Vector2(0, +2);
+                        if (self.Entities.Any(entity => (entity is BGModeToggle)) || BGModeToggle.BGMode) {
+                            self.Tracker.GetEntity<Player>().Sprite.Position = new Vector2();
+                            if (!BGModeToggle.Persist)
+                            {
+                                self.Tracker.GetEntity<Player>().Sprite.Position += new Vector2(0, +2);
+                            }
+                            BGModeToggle.Setup(self);
+                            BGModeToggle.UpdateBG(self);
                         }
-                        BGModeToggle.Setup(self);
-                        BGModeToggle.UpdateBG(self);
                     }
                 }
             }

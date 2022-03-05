@@ -1,63 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{65E6B7A1-4700-4927-92AA-7C48A54D7D19}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>BGswitch</RootNamespace>
+    <TargetFrameworks>net452</TargetFrameworks>
     <AssemblyName>BGswitch</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <RootNamespace>Celeste.Mod.BGswitch</RootNamespace>
+    <LangVersion>7.3</LangVersion>
+    <CelesteGamePath Condition="'$(CELESTEGAMEPATH)' == ''">..\..\.steam\steam\steamapps\common\Celeste</CelesteGamePath>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\..\.steam\steam\steamapps\common\Celeste\Mods\BGswitch</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <Optimize>true</Optimize>
-    <OutputPath>..\..\.steam\steam\steamapps\common\Celeste\Mods\BGswitch</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-  </PropertyGroup>
+
+  <!--Disable "Copy Local" for all references-->
+  <ItemDefinitionGroup>
+    <PackageReference PrivateAssets="all" ExcludeAssets="runtime" />
+    <Reference Private="false" />
+  </ItemDefinitionGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="FNA">
-      <HintPath>..\..\.steam\steam\steamapps\common\Celeste\FNA.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System">
-      <HintPath>..\..\.steam\steam\steamapps\common\Celeste\System.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="MMHOOK_Celeste">
-      <HintPath>..\..\.steam\steam\steamapps\common\Celeste\MMHOOK_Celeste.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Xml">
-      <HintPath>..\..\.steam\steam\steamapps\common\Celeste\System.Xml.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="YamlDotNet">
-      <HintPath>..\..\.steam\steam\steamapps\common\Celeste\YamlDotNet.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Celeste">
-      <HintPath>..\..\.steam\steam\steamapps\common\Celeste\Celeste.exe</HintPath>
-      <Private>False</Private>
-    </Reference>
+    <PackageReference Include="MonoMod" Version="21.08.19.01" />
+    <PackageReference Include="MonoMod.RuntimeDetour" Version="21.08.19.01" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="all" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="BGswitch.cs" />
-    <Compile Include="BGtrigger.cs" />
-    <Compile Include="Switch.cs" />
+    <Reference Include="Celeste" HintPath="$(CELESTEGAMEPATH)\Celeste.exe" />
+    <Reference Include="MMHOOK_Celeste" HintPath="$(CELESTEGAMEPATH)\MMHOOK_Celeste.dll" />
+    <Reference Include="YamlDotNet" HintPath="$(CELESTEGAMEPATH)\YamlDotNet.dll" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+
+  <Choose>
+    <When Condition="'$(OS)' != 'Windows_NT' Or Exists('$(CELESTEGAMEPATH)\FNA.dll')">
+      <ItemGroup>
+        <Reference Include="FNA" HintPath="$(CELESTEGAMEPATH)\FNA.dll" />
+      </ItemGroup>
+    </When>
+
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.Xna.Framework" HintPath="$(WINDIR)\Microsoft.NET\assembly\GAC_32\Microsoft.Xna.Framework\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.dll" />
+        <Reference Include="Microsoft.Xna.Framework.Game" HintPath="$(WINDIR)\Microsoft.NET\assembly\GAC_32\Microsoft.Xna.Framework.Game\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Game.dll" />
+        <Reference Include="Microsoft.Xna.Framework.Graphics" HintPath="$(WINDIR)\Microsoft.NET\assembly\GAC_32\Microsoft.Xna.Framework.Graphics\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Graphics.dll" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+  
 </Project>

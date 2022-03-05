@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "Odg9ygQlC6ny1LVNSy7JUX9fp9hC5Lp+Y7EU2QPhQelYP6IUsigO2EBE/6dfAEqGZu+7SWc5uA2vC+T7iIczBw==",
+  "success": true,
+  "projectFilePath": "/home/henry/repos/BGswitch/BGswitch.csproj",
+  "expectedPackageFiles": [
+    "/home/henry/.nuget/packages/microsoft.netframework.referenceassemblies/1.0.0/microsoft.netframework.referenceassemblies.1.0.0.nupkg.sha512",
+    "/home/henry/.nuget/packages/microsoft.netframework.referenceassemblies.net452/1.0.0/microsoft.netframework.referenceassemblies.net452.1.0.0.nupkg.sha512",
+    "/home/henry/.nuget/packages/mono.cecil/0.11.4/mono.cecil.0.11.4.nupkg.sha512",
+    "/home/henry/.nuget/packages/monomod/21.8.19.1/monomod.21.8.19.1.nupkg.sha512",
+    "/home/henry/.nuget/packages/monomod.runtimedetour/21.8.19.1/monomod.runtimedetour.21.8.19.1.nupkg.sha512",
+    "/home/henry/.nuget/packages/monomod.utils/21.8.19.1/monomod.utils.21.8.19.1.nupkg.sha512"
+  ],
+  "logs": []
+}
