@@ -1,0 +1,6 @@
+﻿- Name: BGswitch
+  Version: 1.1.9
+  DLL: Code/bin/BGswitch.dll
+  Dependencies:
+    - Name: Everest
+      Version: 1.0.0

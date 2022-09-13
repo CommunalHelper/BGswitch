@@ -1,7 +1,9 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BGswitch", "BGswitch.csproj", "{65E6B7A1-4700-4927-92AA-7C48A54D7D19}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BGswitch", "Code\BGswitch.csproj", "{F1A251B2-FDAE-4C0F-A9D2-CEDE43D4FEEC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{65E6B7A1-4700-4927-92AA-7C48A54D7D19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{65E6B7A1-4700-4927-92AA-7C48A54D7D19}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{65E6B7A1-4700-4927-92AA-7C48A54D7D19}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{65E6B7A1-4700-4927-92AA-7C48A54D7D19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1A251B2-FDAE-4C0F-A9D2-CEDE43D4FEEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1A251B2-FDAE-4C0F-A9D2-CEDE43D4FEEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1A251B2-FDAE-4C0F-A9D2-CEDE43D4FEEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1A251B2-FDAE-4C0F-A9D2-CEDE43D4FEEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(MonoDevelopProperties) = preSolution
-		outputpath = ../../.steam/steam/steamapps/common/Celeste/Mods
-		Policies = $0
-		$0.DotNetNamingPolicy = $1
-		$1.DirectoryNamespaceAssociation = PrefixedHierarchical
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5CDECB6F-F4E1-4E2D-A0A8-6834A03CAF18}
 	EndGlobalSection
 EndGlobal
