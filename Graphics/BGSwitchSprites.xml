@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Sprites>
 
-  <coreFlipSwitch path="bgswitch/bgflipswitch/" start="hot">
+  <bgFlipSwitch path="objects/BGswitch/bgflipswitch/" start="fg">
     <Center/>
-    <Anim id="hot" path="switch" frames="10-0" delay="0.08" goto="hotLoop"/>
-    <Loop id="hotLoop" path="switch" frames="0-1" delay="0.08"/>
-    <Anim id="hotOff" path="switch" frames="10-0,15-16" delay="0.08"/>
-    <Loop id="hotOffLoop" path="switch" frames="16" delay="0.08"/>
-    <Anim id="ice" path="switch" frames="2-12" delay="0.08" goto="iceLoop"/>
-    <Loop id="iceLoop" path="switch" frames="11-12" delay="0.08"/>
-    <Anim id="iceOff" path="switch" frames="2-12,13-14" delay="0.08"/>
-    <Loop id="iceOffLoop" path="switch" frames="14" delay="0.08"/>
-  </coreFlipSwitch>
+    <Anim id="bg" path="switch" frames="10-0" delay="0.08" goto="bgLoop"/>
+    <Loop id="bgLoop" path="switch" frames="0-1" delay="0.08"/>
+    <Anim id="bgOff" path="switch" frames="10-0,15-16" delay="0.08"/>
+    <Loop id="bgOffLoop" path="switch" frames="16" delay="0.08"/>
+    <Anim id="fg" path="switch" frames="2-12" delay="0.08" goto="fgLoop"/>
+    <Loop id="fgLoop" path="switch" frames="11-12" delay="0.08"/>
+    <Anim id="fgOff" path="switch" frames="2-12,13-14" delay="0.08"/>
+    <Loop id="fgOffLoop" path="switch" frames="14" delay="0.08"/>
+  </bgFlipSwitch>
 
 </Sprites>

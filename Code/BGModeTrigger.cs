@@ -1,36 +1,32 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Celeste.Mod.Entities;
+using Microsoft.Xna.Framework;
 using Monocle;
-using System;
 
-namespace Celeste.Mod.BGswitch
-
-{
-    public class BGModeTrigger : Trigger
-    {
+namespace Celeste.Mod.BGswitch {
+    [CustomEntity("bgSwitch/bgTrigger")]
+    public class BGModeTrigger : Trigger {
         private readonly bool mode;
-        private readonly bool persistant;
+        private readonly bool persistent;
+        private readonly bool playEffects;
 
         public BGModeTrigger(EntityData data, Vector2 offset)
-            : base(data, offset)
-        {
+            : base(data, offset) {
             mode = data.Bool("mode", true);
-            persistant = data.Bool("persistant", true);
+            persistent = data.Has("persistent") ? data.Bool("persistent", false) : data.Bool("persistant", true);
+            playEffects = data.Bool("playEffects", true);
         }
 
-        public override void OnEnter(Player player)
-        {
-            Level level = base.Scene as Level;
-            if (BGModeToggle.BGMode != mode)
-            {
-                BGModeToggle.BGMode = mode;
-                if (persistant)
-                {
-                    BGModeToggle.Persist = mode;
+        public override void OnEnter(Player player) {
+            if (BGModeManager.BGMode != mode) {
+                BGModeManager.BGMode = mode;
+                if (persistent) {
+                    BGswitch.Session.BGMode = mode;
                 }
-                BGModeToggle.UpdateBG(level);
-                Input.Rumble(RumbleStrength.Medium, RumbleLength.Medium);
-                Celeste.Freeze(0.05f);
-                Add(new Coroutine(BGModeToggle.FlipFlash(level)));
+                if (playEffects) {
+                    Input.Rumble(RumbleStrength.Medium, RumbleLength.Medium);
+                    Celeste.Freeze(0.05f);
+                    Add(new Coroutine(BGModeManager.FlipFlash(SceneAs<Level>())));
+                }
             }
         }
     }
