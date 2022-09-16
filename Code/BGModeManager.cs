@@ -31,6 +31,7 @@ namespace Celeste.Mod.BGswitch {
                             bgSolidTiles.Collider = bgSolidTilesGrid;
                         }
 
+                        // BG tiles render slightly lower than FG tiles, so adjust sprite position to match
                         if (level.Tracker.GetEntity<Player>() is Player player) {
                             player.Sprite.Position.Y += bgMode ? 2f : -2f;
                             player.Depth = bgMode ? Depths.BGTerrain + 1 : Depths.Player;
@@ -60,9 +61,10 @@ namespace Celeste.Mod.BGswitch {
             MethodBase transitionRoutine = FindTransitionRoutine();
             if (transitionRoutine != null) {
                 transitionRoutineHook = new ILHook(transitionRoutine, ModTransitionRoutine);
-            } else {
-                Logger.Log(LogLevel.Warn, "BGswitch", "Could not hook TransitionRoutine - signature has changed!");
-            }                
+            }
+
+            // Our static variables aren't saved automatically with Speedrun Tool, so we need to register them
+            SpeedrunToolImports.RegisterStaticTypes?.Invoke(typeof(BGModeManager), new string[] { "bgMode", "bgSolidTiles", "bgSolidTilesGrid" });
         }
 
         internal static void Unload() {
