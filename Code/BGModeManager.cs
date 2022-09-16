@@ -53,6 +53,7 @@ namespace Celeste.Mod.BGswitch {
 
         internal static void Load() {
             On.Celeste.Level.LoadLevel += OnLoadLevel;
+            On.Celeste.Player.NormalBegin += OnNormalBegin;
             Everest.Events.Level.OnTransitionTo += OnTransition;
 
             // Unfortunately this is a pretty fragile hook. Fortunately it's not that important as BGMode isn't that usable with vanilla anyway. Mostly to prevent freezes if people try.
@@ -67,6 +68,7 @@ namespace Celeste.Mod.BGswitch {
         internal static void Unload() {
             On.Celeste.Level.LoadLevel -= OnLoadLevel;
             Everest.Events.Level.OnTransitionTo -= OnTransition;
+            On.Celeste.Player.NormalBegin -= OnNormalBegin;
             transitionRoutineHook?.Dispose();
             transitionRoutineHook = null;
         }
@@ -102,6 +104,14 @@ namespace Celeste.Mod.BGswitch {
 
         private static void OnTransition(Level level, LevelData next, Vector2 direction) {
             BGswitch.Session.BGMode = bgMode;
+        }
+
+        // Restore BG mode depth if something (e.g. dream dash state) changed it
+        private static void OnNormalBegin(On.Celeste.Player.orig_NormalBegin orig, Player player) {
+            orig(player);
+            if (bgMode) {
+                player.Depth = Depths.BGTerrain + 1;
+            }
         }
 
         // Normally the GBJ check is disabled in vanilla. This hook re-enables it if we are using BG mode
