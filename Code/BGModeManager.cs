@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Mono.Cecil;
 using Monocle;
 using MonoMod.Cil;
 using MonoMod.RuntimeDetour;
@@ -56,8 +57,7 @@ namespace Celeste.Mod.BGswitch {
             On.Celeste.Player.NormalBegin += OnNormalBegin;
             Everest.Events.Level.OnTransitionTo += OnTransition;
 
-            // Unfortunately this is a pretty fragile hook. Fortunately it's not that important as BGMode isn't that usable with vanilla anyway. Mostly to prevent freezes if people try.
-            MethodInfo transitionRoutine = typeof(Level).GetNestedType("<TransitionRoutine>d__26", BindingFlags.NonPublic)?.GetMethod("MoveNext", BindingFlags.NonPublic | BindingFlags.Instance);
+            MethodBase transitionRoutine = FindTransitionRoutine();
             if (transitionRoutine != null) {
                 transitionRoutineHook = new ILHook(transitionRoutine, ModTransitionRoutine);
             } else {
@@ -114,9 +114,25 @@ namespace Celeste.Mod.BGswitch {
             }
         }
 
+        // GetStateMachineTarget doesn't work with this method, so we have to search the IL for the actual coroutine
+        private static MethodBase FindTransitionRoutine() {
+            MethodBase transitionRoutineWrapper = typeof(Level).GetMethod("TransitionRoutine", BindingFlags.NonPublic | BindingFlags.Instance);
+            MethodReference routineCtor = null;
+
+            using DynamicMethodDefinition dmd = new(transitionRoutineWrapper);
+            using ILContext il = new(dmd.Definition);
+            il.Invoke(ctx => {
+                ILCursor cursor = new(ctx);
+                cursor.TryGotoNext(instr => instr.MatchNewobj(out routineCtor));
+            });
+
+            return routineCtor?.DeclaringType.Resolve().FindMethod("MoveNext").ResolveReflection();
+        }
+
         // Normally the GBJ check is disabled in vanilla. This hook re-enables it if we are using BG mode
         private static void ModTransitionRoutine(ILContext ctx) {
             ILCursor cursor = new(ctx);
+
             // Return true to skip GBJ only if we're in vanilla AND we are not in BG mode
             if (cursor.TryGotoNext(MoveType.After,
                 instr => instr.MatchCall(typeof(AreaKeyExt), "GetLevelSet"),
