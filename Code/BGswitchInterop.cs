@@ -29,6 +29,7 @@ namespace Celeste.Mod.BGswitch {
 
     [ModImportName("SpeedrunTool.SaveLoad")]
     public static class SpeedrunToolImports {
-        public static Action<Type, string[]> RegisterStaticTypes;
+        public static Func<Type, string[], object> RegisterStaticTypes;
+        public static Action<object> Unregister;
     }
 }

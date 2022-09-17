@@ -14,6 +14,7 @@ namespace Celeste.Mod.BGswitch {
         private static ILHook transitionRoutineHook;
         private static Solid bgSolidTiles;
         private static Grid bgSolidTilesGrid;
+        private static object saveLoadAction;
 
         private static bool bgMode;
         public static bool BGMode {
@@ -64,7 +65,7 @@ namespace Celeste.Mod.BGswitch {
             }
 
             // Our static variables aren't saved automatically with Speedrun Tool, so we need to register them
-            SpeedrunToolImports.RegisterStaticTypes?.Invoke(typeof(BGModeManager), new string[] { "bgMode", "bgSolidTiles", "bgSolidTilesGrid" });
+            saveLoadAction = SpeedrunToolImports.RegisterStaticTypes?.Invoke(typeof(BGModeManager), new string[] { "bgMode", "bgSolidTiles", "bgSolidTilesGrid" });
         }
 
         internal static void Unload() {
@@ -73,6 +74,8 @@ namespace Celeste.Mod.BGswitch {
             On.Celeste.Player.NormalBegin -= OnNormalBegin;
             transitionRoutineHook?.Dispose();
             transitionRoutineHook = null;
+
+            SpeedrunToolImports.Unregister?.Invoke(saveLoadAction);
         }
 
         private static void OnLoadLevel(On.Celeste.Level.orig_LoadLevel orig, Level level, Player.IntroTypes playerIntro, bool isFromLoader) {
