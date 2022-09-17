@@ -1,0 +1,16 @@
+mods.bgSwitch.name=BGswitch
+
+# BG Mode Toggle
+entities.bgSwitch/bgModeToggle.placements.name.onlyOn=BG Mode Toggle (On)
+entities.bgSwitch/bgModeToggle.placements.name.onlyOff=BG Mode Toggle (Off)
+entities.bgSwitch/bgModeToggle.placements.name.both=BG Mode Toggle (Both)
+entities.bgSwitch/bgModeToggle.attributes.description.onlyOff=Whether the switch can only turn the BG mode off.
+entities.bgSwitch/bgModeToggle.attributes.description.onlyOn=Whether the switch can only turn the BG mode on.
+entities.bgSwitch/bgModeToggle.attributes.description.persistent=Whether the BG mode persists after death instead of resetting to initial room entry state.
+
+# BG Mode Trigger
+triggers.bgSwitch/bgTrigger.placements.name.on=BG Mode (On)
+triggers.bgSwitch/bgTrigger.placements.name.off=BG Mode (Off)
+triggers.bgSwitch/bgTrigger.attributes.description.mode=The BG mode that should be used when the trigger is entered.
+triggers.bgSwitch/bgTrigger.attributes.description.persistent=Whether the BG mode persists after death instead of resetting to initial room entry state.
+triggers.bgSwitch/bgTrigger.attributes.description.playEffects=Whether the trigger should play effects when changing the mode.
