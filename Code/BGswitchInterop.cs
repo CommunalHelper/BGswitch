@@ -10,8 +10,12 @@ namespace Celeste.Mod.BGswitch {
             typeof(SpeedrunToolImports).ModInterop();
         }
 
+        // Returns the current BG mode
         public static bool IsBGMode() => BGModeManager.BGMode;
 
+        // Sets the BG mode
+        //   bool bgMode: the value to set the BG mode to
+        //   bool persistent: whether or not the value should be saved to the session
         [Command("bg_mode", "[BGswitch] Sets the bg mode of the level")]
         public static void SetBGMode(bool bgMode = false, bool persistent = false) {
             if (Engine.Scene is Level) {
@@ -22,6 +26,8 @@ namespace Celeste.Mod.BGswitch {
             }
         }
 
+        // Creates and returns a BGModeListener as a Component.
+        //   Action<bool> action: the delegate that will be called when the BG mode changes
         public static Component GetBGModeListener(Action<bool> action) {
             return new BGModeListener(action);
         }
