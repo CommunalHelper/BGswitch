@@ -21,7 +21,7 @@ namespace Celeste.Mod.BGswitch {
             Collider = new Hitbox(16f, 20f, -8f, -8f);
             Add(new BGModeListener(new Action<bool>(OnChangeMode)));
             Add(new PlayerCollider(OnPlayer));
-            Add(sprite = BGswitch.spriteBank.Create("bgFlipSwitch"));
+            Add(sprite = GFX.SpriteBank.Create("BGswitch_toggle"));
             Depth = 2000;
         }
 

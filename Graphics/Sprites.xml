@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Sprites>
 
-  <bgFlipSwitch path="objects/BGswitch/bgflipswitch/" start="fg">
+  <BGswitch_toggle path="objects/BGswitch/bgflipswitch/" start="fg">
     <Center/>
     <Anim id="bg" path="switch" frames="10-0" delay="0.08" goto="bgLoop"/>
     <Loop id="bgLoop" path="switch" frames="0-1" delay="0.08"/>
@@ -11,6 +11,6 @@
     <Loop id="fgLoop" path="switch" frames="11-12" delay="0.08"/>
     <Anim id="fgOff" path="switch" frames="2-12,13-14" delay="0.08"/>
     <Loop id="fgOffLoop" path="switch" frames="14" delay="0.08"/>
-  </bgFlipSwitch>
+  </BGswitch_toggle>
 
 </Sprites>
