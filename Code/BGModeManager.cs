@@ -11,6 +11,8 @@ using System.Reflection;
 
 namespace Celeste.Mod.BGswitch {
     public static class BGModeManager {
+        private const int BgModeDepth = Depths.BGTerrain + 1;
+
         private static ILHook transitionRoutineHook;
         private static Solid bgSolidTiles;
         private static Grid bgSolidTilesGrid;
@@ -27,17 +29,15 @@ namespace Celeste.Mod.BGswitch {
                         level.SolidTiles.Collidable = !bgMode;
                         bgSolidTiles.Collidable = bgMode;
 
-                        // If something external is using BG mode, enable our collider
-                        if (bgSolidTiles.Collider == null) {
-                            bgSolidTiles.Collider = bgSolidTilesGrid;
+                        // If something external switched on BG mode, enable our collider
+                        bgSolidTiles.Collider ??= bgSolidTilesGrid;
+
+                        // We set BG depth in Player.Update, so only need to reset here
+                        // This assumes that we don't need to reset the depth if it's been changed by some other state (may need to revisit)
+                        if (!bgMode && level.Tracker.GetEntity<Player>() is Player player && player.Depth == BgModeDepth) {
+                            player.Depth = Depths.Player;
                         }
 
-                        // BG tiles render slightly lower than FG tiles, so adjust sprite position to match
-                        if (level.Tracker.GetEntity<Player>() is Player player) {
-                            player.Sprite.Position.Y += bgMode ? 2f : -2f;
-                            player.Depth = bgMode ? Depths.BGTerrain + 1 : Depths.Player;
-                        }
-                        
                         foreach (BGModeListener listener in level.Tracker.GetComponents<BGModeListener>()) {
                             listener.OnChange(bgMode);
                         }
@@ -56,7 +56,7 @@ namespace Celeste.Mod.BGswitch {
 
         internal static void Load() {
             On.Celeste.Level.LoadLevel += OnLoadLevel;
-            On.Celeste.Player.NormalBegin += OnNormalBegin;
+            On.Celeste.Player.Update += OnPlayerUpdate;
             Everest.Events.Level.OnTransitionTo += OnTransition;
 
             MethodBase transitionRoutine = FindTransitionRoutine();
@@ -65,13 +65,15 @@ namespace Celeste.Mod.BGswitch {
             }
 
             // Our static variables aren't saved automatically with Speedrun Tool, so we need to register them
-            saveLoadAction = SpeedrunToolImports.RegisterStaticTypes?.Invoke(typeof(BGModeManager), new string[] { "bgMode", "bgSolidTiles", "bgSolidTilesGrid" });
+            saveLoadAction = SpeedrunToolImports.RegisterStaticTypes?.Invoke(typeof(BGModeManager), new string[] { 
+                "bgMode", "bgSolidTiles", "bgSolidTilesGrid"
+            });
         }
 
         internal static void Unload() {
             On.Celeste.Level.LoadLevel -= OnLoadLevel;
             Everest.Events.Level.OnTransitionTo -= OnTransition;
-            On.Celeste.Player.NormalBegin -= OnNormalBegin;
+            On.Celeste.Player.Update -= OnPlayerUpdate;
             transitionRoutineHook?.Dispose();
             transitionRoutineHook = null;
 
@@ -101,9 +103,8 @@ namespace Celeste.Mod.BGswitch {
             // Set our defaults
             level.Session.SetFlag("bg_mode", bgMode);
             level.SolidTiles.Collidable = !bgMode;
-            if (level.Tracker.GetEntity<Player>() is Player player) {
-                player.Sprite.Position.Y = bgMode ? 2f : 0f;
-                player.Depth = bgMode ? Depths.BGTerrain + 1 : Depths.Player;
+            if (!bgMode && level.Tracker.GetEntity<Player>() is Player player && player.Depth == BgModeDepth) {
+                player.Depth = Depths.Player;
             }
         }
 
@@ -111,11 +112,11 @@ namespace Celeste.Mod.BGswitch {
             BGswitch.Session.BGMode = bgMode;
         }
 
-        // Restore BG mode depth if something (e.g. dream dash state) changed it
-        private static void OnNormalBegin(On.Celeste.Player.orig_NormalBegin orig, Player player) {
+        // Change depth to our custom one if another state has reset it
+        private static void OnPlayerUpdate(On.Celeste.Player.orig_Update orig, Player player) {
             orig(player);
-            if (bgMode) {
-                player.Depth = Depths.BGTerrain + 1;
+            if (bgMode && player.Depth == Depths.Player) {
+                player.Depth = BgModeDepth;
             }
         }
 
