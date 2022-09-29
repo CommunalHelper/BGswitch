@@ -81,10 +81,6 @@ namespace Celeste.Mod.BGswitch {
         }
 
         private static void OnLoadLevel(On.Celeste.Level.orig_LoadLevel orig, Level level, Player.IntroTypes playerIntro, bool isFromLoader) {
-            if (level.Session.JustStarted && level.Session.FirstLevel) {
-                BGswitch.Session.BGMode = false;
-            }
-
             bgMode = BGswitch.Session.BGMode;
 
             orig(level, playerIntro, isFromLoader);
