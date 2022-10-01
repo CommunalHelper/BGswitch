@@ -25,7 +25,10 @@ public static class BGswitchImports {
 typeof(BGswitchImports).ModInterop();
 
 // Example usages
-Action<bool> logMode = (mode) => Logger.Log("MyMod", $"BG mode changed to: { mode }");
+public void LogMode(bool mode) {
+  Logger.Log("MyMod", $"BG mode changed to: { mode }");
+}
+
 Component listener = GetBGModeListener?.Invoke(logMode);
 if (listener != null) {
   myEntity.Add(listener);
