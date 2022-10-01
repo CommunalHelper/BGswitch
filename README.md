@@ -29,7 +29,7 @@ public void LogMode(bool mode) {
   Logger.Log("MyMod", $"BG mode changed to: { mode }");
 }
 
-Component listener = GetBGModeListener?.Invoke(logMode);
+Component listener = GetBGModeListener?.Invoke(LogMode);
 if (listener != null) {
   myEntity.Add(listener);
 }
