@@ -2,7 +2,7 @@
   Version: 1.2.2
   DLL: Code/bin/BGswitch.dll
   Dependencies:
-    - Name: Everest
+    - Name: EverestCore
       Version: 1.4465.0
   OptionalDependencies:
     - Name: SpeedrunTool
